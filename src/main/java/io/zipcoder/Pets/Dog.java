@@ -3,7 +3,7 @@ package io.zipcoder.Pets;
 public class Dog extends Pet {
 
     public Dog(){
-        super();
+        this.setName("Dog name");
     }
 
     public Dog(String name){
@@ -11,6 +11,6 @@ public class Dog extends Pet {
     }
 
     public String speak(){
-        return "BARK!";
+        return "Bark!";
     }
 }

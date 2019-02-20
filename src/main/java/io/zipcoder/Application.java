@@ -5,47 +5,70 @@ import io.zipcoder.Pets.Cat;
 import io.zipcoder.Pets.Dog;
 import io.zipcoder.Pets.Pet;
 import io.zipcoder.Pets.Sloth;
-
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Collections;
+import java.util.List;
 
 public class Application {
 
-    private static Scanner scanner = new Scanner(System.in);
-    private static Integer numberOfPets;
-    private static ArrayList<String> typesOfPets = new ArrayList<String>();
-    private static ArrayList<String> namesOfPets = new ArrayList<String>();
-    private static ArrayList<Pet> pets = new ArrayList<Pet>();
+    private static final IOConsole console = new IOConsole(System.in, System.out);
+
 
     public static void main(String[] args) {
-        System.out.println("Hello! How many pets do you have?");
-        numberOfPets = Integer.valueOf(scanner.nextLine());
-        for (int i = 0; i < numberOfPets; i++){
-            System.out.println("What kind of pet do you have?");
-            typesOfPets.add(scanner.nextLine());
-            System.out.println("What is your pets name?");
-            namesOfPets.add(scanner.nextLine());
+
+        List<Pet> petList = new ArrayList<Pet>();
+        Integer numberOfPets = console.getIntegerInput("How many pets do you have? ");
+        console.getStringInput("");
+
+        for (int i = 0; i < numberOfPets; i++) {
+            String petType = console.getStringInput("What kind of pet do you have? ");
+            String petName = console.getStringInput("What is your pets name? ");
+            if (petType.equals("Dog")) {
+                petList.add(new Dog(petName));
+            }
+            if (petType.equals("Cat")) {
+                petList.add(new Cat(petName));
+            }
+            if (petType.equals("Sloth")) {
+                petList.add(new Sloth(petName));
+
+            }
+        }
+        for (Pet p : petList) {
+            String petType = getPetType(p);
+            console.println("You have a %s named %s.", petType, p.getName());
+            console.println("%s says %s", p.getName(), p.speak());
         }
 
-        for (int i = 0; i < numberOfPets; i++){
-            if (typesOfPets.get(i).equals("Dog")){
-                pets.add(new Dog(namesOfPets.get(i)));
-            }
-            else if (typesOfPets.get(i).equals("Cat")){
-                pets.add(new Cat(namesOfPets.get(i)));
-            }
-            else if (typesOfPets.get(i).equals("Sloth")){
-                pets.add(new Sloth(namesOfPets.get(i)));
-            }
+        Collections.sort(petList);
+        console.println("\nYour pets sorted by name:");
+        for (Pet p : petList){
+            String petType = getPetType(p);
+            console.println("%s the %s", p.getName(), petType);
         }
 
-        System.out.println("You have a:");
-        for (int i = 0; i < numberOfPets; i++){
-            System.out.println(typesOfPets.get(i) + " named " + namesOfPets.get(i));
-        }
-
-        for (int i = 0; i < numberOfPets; i++){
-            System.out.println(pets.get(i).getName() + " says " + pets.get(i).speak());
+        Collections.sort(petList, new PetComparator());
+        console.println("\nYour pets sorted by class:");
+        for (Pet p : petList){
+            String petType = getPetType(p);
+            console.println("%s named %s",  petType, p.getName());
         }
     }
+
+    public static String getPetType(Pet p){
+        if (p instanceof Dog) {
+            return "Dog";
+        }
+        if (p instanceof Cat) {
+            return "Cat";
+        }
+        if (p instanceof Sloth) {
+            return "Sloth";
+        }
+        else {
+            return "Not a supported pet";
+        }
+    }
+
+
 }

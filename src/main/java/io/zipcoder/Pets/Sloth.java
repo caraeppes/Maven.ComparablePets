@@ -3,7 +3,7 @@ package io.zipcoder.Pets;
 public class Sloth extends Pet {
 
     public Sloth(){
-        super();
+        this.setName("Sloth name");
     }
 
     public Sloth(String name){
@@ -11,6 +11,6 @@ public class Sloth extends Pet {
     }
 
     public String speak(){
-        return "Squeeeeeak!";
+        return "Squeak!";
     }
 }
