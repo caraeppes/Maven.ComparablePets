@@ -1,5 +1,7 @@
 package io.zipcoder;
 
+import io.zipcoder.Pets.Pet;
+import io.zipcoder.Pets.Sloth;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
